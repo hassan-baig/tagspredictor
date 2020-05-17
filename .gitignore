@@ -2,4 +2,4 @@
 /env*
 
 # Comment if trying to upload to Heroku
-# /ml_model*
+/ml_model*
