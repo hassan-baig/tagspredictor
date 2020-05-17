@@ -1,0 +1,5 @@
+/__pycache__*
+/env*
+
+# Comment if trying to upload to Heroku
+# /ml_model*

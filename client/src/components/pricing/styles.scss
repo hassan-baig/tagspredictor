@@ -1,0 +1,10 @@
+@import "../../scss/variables";
+.pricing-btn {
+  background: $primaryColor !important;
+  color: #fff !important;
+  border: 1px solid $primaryColor !important;
+  &:hover {
+    background: #187ecc !important;
+    box-shadow: 0px 6px 11.83px 1.17px rgba(0, 0, 0, 0.08);
+  }
+}
