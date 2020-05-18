@@ -54,6 +54,8 @@ class Search extends Component {
         }, 1000);
       })
       .catch((error) => {
+        this.setState({ loading: "none", barPercentage: 0 });
+        alert(error.response.message);
         console.log(error);
       });
   };

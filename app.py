@@ -14,29 +14,20 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # List all models names (Add more models in the list)
 models = [
-    # 'LinearSVCOneVsRest',
+    'LinearSVCOneVsRest',
     'LinearSVCModel'
 ]
 
 
 def predict_tag(question, model, multi_labelled):
+    loaded_model = joblib.load('ml_model/' + model +'.pkl')
     if(multi_labelled):
-        loaded_model = joblib.load('ml_model/multi_labelled/' + model +'.pkl')
         order = np.argsort(loaded_model.predict_proba(question), axis=1)[:,-3:]
         prediction = loaded_model.classes_[order]
         return prediction
     else: 
-        loaded_model = joblib.load('ml_model/' + model +'.pkl') 
         prediction = loaded_model.predict(question)
         return prediction
-
-
-def best_prediction(question, multi_labelled):
-    predictions = []
-    for model in models:
-        predictions.append(predict_tag(question, model, multi_labelled))
-
-    return max(predictions)
 
 
 
@@ -52,18 +43,14 @@ def predict():
         data = request.get_json()
         questions = data['questions']
         multi_labelled = None
-        model = None
+        model = "LinearSVCModel"
         if('multi_labelled' in data): 
             multi_labelled = data['multi_labelled']
-        if('model' in data): 
-            model =data['model']
+        if('model' in data and len(data['model']) > 0 ): 
+            model = data['model']
 
         if questions and len(questions) > 0:
-            if(model):
-                predicted_tags = predict_tag(questions, model, multi_labelled)
-
-            else:
-                predicted_tags = best_prediction(questions, multi_labelled)
+            predicted_tags = predict_tag(questions, model, multi_labelled)
             
             prediction = []
             i = 0
@@ -74,23 +61,22 @@ def predict():
                 })
                 i = i + 1
 
-            predictions = {
+            return {
                 'error' : '0',
                 'message' : 'Successfull',
                 'prediction' : prediction
-            }
+            }, 300
         else:
-            predictions = {
+            return  {
                 'error' : '1',
                 'message': 'Invalid Parameters'                
-            }
+            }, 401
     except Exception as e:
-        predictions = {
+        return {
             'error' : '2',
             "message": str(e)
-        }
+        }, 500
 
-    return predictions
 
 
 if __name__ == '__main__':
