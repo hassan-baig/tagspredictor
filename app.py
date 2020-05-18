@@ -65,7 +65,7 @@ def predict():
                 'error' : '0',
                 'message' : 'Successfull',
                 'prediction' : prediction
-            }, 300
+            }, 200
         else:
             return  {
                 'error' : '1',
