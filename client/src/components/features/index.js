@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import featureArt from "../../img/hosting-service-1.png";
+import featureArt2 from "../../img/Frame.svg";
+import featureArt3 from "../../img/Frame3.svg";
 import "./styles.scss";
 class Features extends Component {
   state = {};
@@ -26,13 +28,13 @@ class Features extends Component {
             <div class='row hosting_service_inner'>
               <div class='col-md-6'>
                 <div class='h_service_left'>
-                  <img src={featureArt} alt='' />
+                  <img src={featureArt3} alt='' />
                 </div>
               </div>
               <div class='col-md-6'>
                 <div class='h_service_right'>
                   <div class='server_title'>
-                    <h2 style={{ paddingTop: "175px" }}>
+                    <h2 style={{ paddingTop: "125px" }}>
                       Multiple Models To Select
                     </h2>
                     <p>
@@ -48,7 +50,7 @@ class Features extends Component {
             </div>
           </div>
 
-          <div class='container mt-5'>
+          {/* <div class='container mt-5'>
             <div class='row hosting_service_inner'>
               <div class='col-md-6 order-2'>
                 <div class='h_service_left'>
@@ -58,7 +60,7 @@ class Features extends Component {
               <div class='col-md-6 order-1'>
                 <div class='h_service_right'>
                   <div class='server_title'>
-                    <h2 style={{ paddingTop: "175px" }}>Best Model</h2>
+                    <h2 style={{ paddingTop: "125px" }}>Best Model</h2>
                     <p>
                       I must explain to you how all this mistaken idea of
                       denouncing pleasure and praising pain was born and I will
@@ -69,19 +71,21 @@ class Features extends Component {
                   </div>
                 </div>
               </div>
+           
             </div>
           </div>
-          <div class='container'>
+         */}
+          <div class='container mt-5'>
             <div class='row hosting_service_inner'>
-              <div class='col-md-6'>
+              <div class='col-md-6 order-2'>
                 <div class='h_service_left'>
-                  <img src={featureArt} alt='' />
+                  <img src={featureArt2} alt='' />
                 </div>
               </div>
               <div class='col-md-6'>
                 <div class='h_service_right'>
                   <div class='server_title'>
-                    <h2 style={{ paddingTop: "175px" }}>Bulk Search</h2>
+                    <h2 style={{ paddingTop: "125px" }}>Bulk Search</h2>
                     <p>
                       I must explain to you how all this mistaken idea of
                       denouncing pleasure and praising pain was born and I will

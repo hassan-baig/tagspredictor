@@ -6,11 +6,13 @@ import "./styles.scss";
 class Search extends Component {
   state = {
     tags: null,
+    type: null,
     questions: [],
     model: "",
-    progressBar: 70,
+    barPercentage: 70,
     models: ["LinearSVCOneVsRest", "LinearSVCModel"],
     multi_labelled: false,
+    loading: "none",
   };
 
   onChangeSwitch = (e) => {
@@ -31,6 +33,7 @@ class Search extends Component {
   };
   onClick = () => {
     // console.log(this.state);
+    this.setState({ loading: "start", barPercentage: 10 });
     axios
       .post("/api/predictor", {
         questions: this.state.questions,
@@ -39,9 +42,16 @@ class Search extends Component {
       })
       .then((response) => {
         console.log(response);
-        this.setState({ tags: response.data.prediction });
-
-        // this.setState({ tag: response.data.tag });
+        setTimeout(() => {
+          this.setState({ barPercentage: 100 });
+        }, 500);
+        this.setState({ barPercentage: 60 });
+        setTimeout(() => {
+          this.setState({
+            tags: response.data.prediction,
+            loading: "finished",
+          });
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +63,7 @@ class Search extends Component {
         {/* p_100 for padding 100px */}
         <section class="domain_search_area p_100" id="single-search">
           <div class="container">
-            <div class="main_title color_white">
+            <div class="main_title color_white" style={{ paddingBottom: "30px" }}>
               <h2>SEARCH QUESTION TAG HERE</h2>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -83,7 +93,10 @@ class Search extends Component {
                   placeholder="Enter Question"
                   onChange={(e) => this.onChangeQuestion(e)}
                 />
-                <select class="select_dropdown" onChange={(e) => this.onSelectModel(e)}>
+                <select
+                  className="select_dropdown selectpicker"
+                  onChange={(e) => this.onSelectModel(e)}
+                >
                   <option selected disabled value="">
                     Models
                   </option>
@@ -97,7 +110,7 @@ class Search extends Component {
               </div>
             </div>
             <div>
-              {this.state.tags == null && (
+              {this.state.loading == "start" && (
                 <div
                   style={{
                     paddingTop: "20px",
@@ -110,10 +123,10 @@ class Search extends Component {
                     <div
                       class="progress-bar progress-bar-striped bg-success progress-bar-animated"
                       role="progressbar"
-                      aria-valuenow={this.state.progressBar}
+                      aria-valuenow={this.state.barPercentage}
                       aria-valuemin="0"
                       aria-valuemax="100"
-                      style={{ width: this.state.progressBar + "%" }}
+                      style={{ width: this.state.barPercentage + "%" }}
                     ></div>
                   </div>
                 </div>
@@ -129,11 +142,15 @@ class Search extends Component {
               >
                 <p style={{ fontSize: "20px" }}>
                   Predicted Tag:{" "}
-                  {this.state.tags.map((tag) => (
-                    <span key={tag} className="badge badge-light m-2 ">
-                      {"*" + tag.tag + " "}
-                    </span>
-                  ))}
+                  {Array.isArray(this.state.tags[0].tag) ? (
+                    this.state.tags[0].tag.map((t, index) => (
+                      <span key={index} className="badge badge-light m-2 ">
+                        {t + " "}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="badge badge-light m-2 ">{this.state.tags[0].tag}</span>
+                  )}
                 </p>
               </div>
             )}
