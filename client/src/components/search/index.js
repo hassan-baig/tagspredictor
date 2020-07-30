@@ -35,7 +35,7 @@ class Search extends Component {
     // console.log(this.state);
     this.setState({ loading: "start", barPercentage: 10 });
     axios
-      .post("/api/predictor", {
+      .post("https://tagspredictor.herokuapp.com/api/predictor", {
         questions: this.state.questions,
         model: this.state.model,
         multi_labelled: this.state.multi_labelled,
@@ -55,58 +55,47 @@ class Search extends Component {
       })
       .catch((error) => {
         this.setState({ loading: "none", barPercentage: 0 });
-        alert(error.response.message);
-        console.log(error);
+        // alert(error.response);
+        console.log(error.response);
       });
   };
   render() {
     return (
-      <div className="search-bg">
+      <div className='search-bg'>
         {/* p_100 for padding 100px */}
-        <section class="domain_search_area p_100" id="single-search">
-          <div class="container">
-            <div class="main_title color_white" style={{ paddingBottom: "30px" }}>
+        <section class='domain_search_area p_100' id='single-search'>
+          <div class='container'>
+            <div class='main_title color_white' style={{ paddingBottom: "30px" }}>
               <h2>SEARCH QUESTION TAG HERE</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua Ut enim.
-              </p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim.</p>
             </div>
 
-            <div class="custom-control custom-switch pb-2">
+            <div class='custom-control custom-switch pb-2'>
               <input
-                type="checkbox"
-                class="custom-control-input"
-                id="customSwitch1"
+                type='checkbox'
+                class='custom-control-input'
+                id='customSwitch1'
                 value={!this.state.multi_labelled}
                 onChange={(e) => {
                   this.onChangeSwitch(e);
                 }}
               />
-              <label class="custom-control-label" for="customSwitch1" style={{ color: "#fff" }}>
+              <label class='custom-control-label' for='customSwitch1' style={{ color: "#fff" }}>
                 Mutilable
               </label>
             </div>
-            <div class="domain_inner">
-              <div class="domain_search_box">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Question"
-                  onChange={(e) => this.onChangeQuestion(e)}
-                />
-                <select
-                  className="select_dropdown selectpicker"
-                  onChange={(e) => this.onSelectModel(e)}
-                >
-                  <option selected disabled value="">
+            <div class='domain_inner'>
+              <div class='domain_search_box'>
+                <input type='text' class='form-control' placeholder='Enter Question' onChange={(e) => this.onChangeQuestion(e)} />
+                <select className='select_dropdown selectpicker' onChange={(e) => this.onSelectModel(e)}>
+                  <option selected disabled value=''>
                     Models
                   </option>
                   {this.state.models.map((m) => (
                     <option value={m}>{m}</option>
                   ))}
                 </select>
-                <button class="btn btn-default tag-btn" type="button" onClick={this.onClick}>
+                <button class='btn btn-default tag-btn' type='button' onClick={this.onClick}>
                   Get Tag
                 </button>
               </div>
@@ -121,13 +110,13 @@ class Search extends Component {
                     margin: "auto",
                   }}
                 >
-                  <div class="progress">
+                  <div class='progress'>
                     <div
-                      class="progress-bar progress-bar-striped bg-success progress-bar-animated"
-                      role="progressbar"
+                      class='progress-bar progress-bar-striped bg-success progress-bar-animated'
+                      role='progressbar'
                       aria-valuenow={this.state.barPercentage}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
+                      aria-valuemin='0'
+                      aria-valuemax='100'
                       style={{ width: this.state.barPercentage + "%" }}
                     ></div>
                   </div>
@@ -140,18 +129,18 @@ class Search extends Component {
                   paddingTop: "20px",
                   paddingBottom: "20px",
                 }}
-                class="main_title color_white"
+                class='main_title color_white'
               >
                 <p style={{ fontSize: "20px" }}>
                   Predicted Tag:{" "}
                   {Array.isArray(this.state.tags[0].tag) ? (
                     this.state.tags[0].tag.map((t, index) => (
-                      <span key={index} className="badge badge-light m-2 ">
+                      <span key={index} className='badge badge-light m-2 '>
                         {t + " "}
                       </span>
                     ))
                   ) : (
-                    <span className="badge badge-light m-2 ">{this.state.tags[0].tag}</span>
+                    <span className='badge badge-light m-2 '>{this.state.tags[0].tag}</span>
                   )}
                 </p>
               </div>
