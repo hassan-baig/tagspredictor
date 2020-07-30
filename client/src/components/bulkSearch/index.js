@@ -14,16 +14,14 @@ class BulkSearch extends Component {
     this.setState({ questions: arr });
   };
   onSelectModel = (e) => {
-    // console.log(e.target.value);
     this.setState({
       model: e.target.value,
     });
   };
   onClick = () => {
-    // console.log(this.state);
     this.setState({ loading: true });
     axios
-      .post("https://tagspredictor.herokuapp.com/api/predictor", {
+      .post("/api/predictor", {
         questions: this.state.questions,
         model: this.state.model,
       })
@@ -36,7 +34,7 @@ class BulkSearch extends Component {
       });
   };
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     const { predictions, loading } = this.state;
     return (
       <div>
@@ -70,9 +68,6 @@ class BulkSearch extends Component {
                   <button class='btn btn-default tag-btn' type='button' style={{ width: "20%" }} onClick={this.onClick}>
                     Get Results
                   </button>
-                  {/* <button className='bulk-btn domain_search_box'>
-                    Get Result
-                  </button> */}
                 </div>
               </div>
             </div>
